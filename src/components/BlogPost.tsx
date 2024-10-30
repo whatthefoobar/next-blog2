@@ -32,18 +32,15 @@ export default function BlogPost({ post }: BlogPostProps) {
       username: user?.username,
       image: post.image,
     };
-
+    //`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post._id}`
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedPost),
-        }
-      );
+      const res = await fetch(`../api/posts/${post._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedPost),
+      });
 
       if (!res.ok) throw new Error("Failed to update post");
 
@@ -61,14 +58,11 @@ export default function BlogPost({ post }: BlogPostProps) {
       "Are you sure you want to delete this post?"
     );
     if (!confirmDelete) return;
-
+    //${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post._id}
     try {
-      const deleteRes = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post._id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const deleteRes = await fetch(`../api/posts/${post._id}`, {
+        method: "DELETE",
+      });
 
       if (!deleteRes.ok) throw new Error("Failed to delete post");
 

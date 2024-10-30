@@ -36,9 +36,9 @@ const WritePage = () => {
       image: imageFile?.name || "",
     };
     console.log("postData", postData);
-
+    //`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
+      const res = await fetch(`../api/posts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -8,7 +8,9 @@ export default async function Page({
   searchParams: { tag?: string; page?: string };
 }) {
   // Fetch posts from your API
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
+  //`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`
+
+  const res = await fetch(`../api/posts`, {
     next: { revalidate: 60 }, // Revalidate at most once every 60 seconds
   });
   const posts: Post[] = await res.json();
