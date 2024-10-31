@@ -39,8 +39,6 @@ const PostGallery = ({ posts }: PostGalleryProps) => {
     setCurrentPage(queryPage);
   }, [queryPage]);
 
-  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
-
   // on tag click change query params to reflect tag and page number
   const handleTagClick = (tag: string) => {
     setSelectedTag(tag);
@@ -52,6 +50,8 @@ const PostGallery = ({ posts }: PostGalleryProps) => {
     setCurrentPage(pageNumber);
     router.push(`/?tag=${selectedTag}&page=${pageNumber}`);
   };
+  // all posts or filteredpost/ posts per page
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
   const indexOfLastPost = currentPage * POSTS_PER_PAGE;
   const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;

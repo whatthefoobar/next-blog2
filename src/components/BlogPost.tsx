@@ -74,7 +74,7 @@ export default function BlogPost({ post }: BlogPostProps) {
       if (!deleteRes.ok) throw new Error("Failed to delete post");
 
       //toast.success("Post deleted successfully!");
-      router.refresh(); // Trigger a refresh to fetch updated data
+
       router.push("/"); // Redirect to home page after deletion
       toast.success("Post deleted successfully!");
     } catch (err) {
