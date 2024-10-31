@@ -44,15 +44,17 @@ const Navbar = () => {
 
         {/* Navigation Links for Desktop */}
         <div className="hidden md:flex space-x-6 items-center">
-          <Link href="/" className="hover:text-gray-400">
+          {/* <Link href="/" className="hover:text-gray-400">
             Blog
-          </Link>
+          </Link> */}
           <Link href="/about" className="hover:text-gray-400">
             About
           </Link>
-          <Link href="/write" className="hover:text-gray-400">
-            Write
-          </Link>
+          {user && (
+            <Link href="/write" className="hover:text-gray-400">
+              Write
+            </Link>
+          )}
           <Link href="/contact" className="hover:text-gray-400">
             Contact
           </Link>

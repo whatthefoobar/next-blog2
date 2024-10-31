@@ -24,6 +24,7 @@ const PostGallery = ({ posts }: PostGalleryProps) => {
   const [selectedTag, setSelectedTag] = useState(queryTag);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
+  //return filtered posts if clicking on tag buttons
   useEffect(() => {
     const updatedFilteredPosts =
       selectedTag === "all"
@@ -33,12 +34,14 @@ const PostGallery = ({ posts }: PostGalleryProps) => {
     setFilteredPosts(updatedFilteredPosts);
   }, [selectedTag, posts]);
 
+  // start at 1 but if on click of page numbers then change
   useEffect(() => {
     setCurrentPage(queryPage);
   }, [queryPage]);
 
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
+  // on tag click change query params to reflect tag and page number
   const handleTagClick = (tag: string) => {
     setSelectedTag(tag);
     setCurrentPage(1);

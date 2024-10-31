@@ -1,10 +1,9 @@
 "use client";
 
-// app/write/page.tsx
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
+import { toast } from "react-toastify";
 
 const WritePage = () => {
   const [title, setTitle] = useState("");
@@ -35,10 +34,9 @@ const WritePage = () => {
       username,
       image: imageFile?.name || "",
     };
-    console.log("postData", postData);
-    //`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`
+
     try {
-      const res = await fetch(`../api/posts`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,8 +49,13 @@ const WritePage = () => {
       }
 
       const data = await res.json();
-      setSuccess(data.message);
-      router.push("/");
+      console.log("newly creared post", data.post);
+
+      setSuccess("Post created successfully!");
+
+      // Redirect to the newly created post's page using its ID
+      router.push(`/posts/${data.post._id}`);
+      toast.success("Post created successfully!");
     } catch (error) {
       setError("Error creating post");
       console.error(error);

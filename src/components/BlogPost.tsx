@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import BackButton from "@/components/BackButton";
 import { useUser } from "@/context/UserContext";
-import { toast } from "react-toastify";
 import { Post } from "../../types";
+import { toast } from "react-toastify";
 
 interface BlogPostProps {
   post: Post;
@@ -24,7 +24,7 @@ export default function BlogPost({ post }: BlogPostProps) {
 
   const handleEditToggle = () => setIsEditing(!isEditing);
 
-  const handleSave = async () => {
+  const handleEdit = async () => {
     const updatedPost = {
       title,
       description,
@@ -32,22 +32,26 @@ export default function BlogPost({ post }: BlogPostProps) {
       username: user?.username,
       image: post.image,
     };
-    //`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post._id}`
+
     try {
-      const res = await fetch(`../api/posts/${post._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedPost),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedPost),
+        }
+      );
 
       if (!res.ok) throw new Error("Failed to update post");
 
-      toast.success("Post updated successfully!");
       setIsEditing(false); // Exit editing mode
       router.refresh(); // Refresh to show updated post
+      toast.success("Post updated successfully!");
     } catch (err) {
+      toast.error("Error updating post");
       setError("Error updating post");
       console.error("Edit error:", err);
     }
@@ -58,16 +62,21 @@ export default function BlogPost({ post }: BlogPostProps) {
       "Are you sure you want to delete this post?"
     );
     if (!confirmDelete) return;
-    //${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post._id}
+
     try {
-      const deleteRes = await fetch(`../api/posts/${post._id}`, {
-        method: "DELETE",
-      });
+      const deleteRes = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post._id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (!deleteRes.ok) throw new Error("Failed to delete post");
 
-      toast.success("Post deleted successfully!");
+      //toast.success("Post deleted successfully!");
+      router.refresh(); // Trigger a refresh to fetch updated data
       router.push("/"); // Redirect to home page after deletion
+      toast.success("Post deleted successfully!");
     } catch (err) {
       setError("Error deleting post");
       console.error("Delete error:", err);
@@ -82,6 +91,7 @@ export default function BlogPost({ post }: BlogPostProps) {
     }
   };
 
+  // format date
   const date = new Date(post.date);
   const formattedDate = date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -170,7 +180,7 @@ export default function BlogPost({ post }: BlogPostProps) {
               {isEditing ? (
                 <>
                   <button
-                    onClick={handleSave}
+                    onClick={handleEdit}
                     className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
                   >
                     Save
