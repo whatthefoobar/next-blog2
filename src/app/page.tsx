@@ -4,10 +4,9 @@ import PostGallery from "../components/PostGallery";
 
 export default async function Page() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
-    next: { revalidate: 60 }, // Revalidate at most once every 60 seconds
+    next: { revalidate: 10 }, // Revalidate at most once every 60 seconds, 10 in dev
   });
   const posts: Post[] = await res.json();
-  // console.log("posts in home", posts);
 
   return (
     <div>

@@ -41,8 +41,9 @@ const LatestPostsCarousel = ({ posts }: LatestPostsCarouselProps) => {
                     <Image
                       src={`/images/${post.image}`} // Ensure this path is correct or use an absolute URL
                       alt={post.title}
-                      layout="fill"
-                      objectFit="cover"
+                      fill
+                      sizes="100%"
+                      style={{ objectFit: "cover" }}
                       className="rounded-l-lg"
                     />
                   </div>
