@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const WritePage = () => {
   const [title, setTitle] = useState("");
@@ -36,29 +37,20 @@ const WritePage = () => {
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
-        method: "POST",
+      const res = await axios.post(`/api/posts`, postData, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(postData),
       });
-
-      if (!res.ok) {
-        throw new Error("Failed to create post");
-      }
-
-      const data = await res.json();
-      console.log("newly creared post", data.post);
 
       setSuccess("Post created successfully!");
 
       // Redirect to the newly created post's page using its ID
-      router.push(`/posts/${data.post._id}`);
+      router.push(`/posts/${res.data.post._id}`);
       toast.success("Post created successfully!");
     } catch (error) {
       setError("Error creating post");
-      console.error(error);
+      console.error("Error:", error);
     }
   };
 
