@@ -57,10 +57,7 @@ export default function BlogPostPage({ params }: Props) {
     };
 
     try {
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post?._id}`,
-        updatedPost
-      );
+      await axios.put(`/api/posts/${post?._id}`, updatedPost);
       setIsEditing(false);
       toast.success("Post updated successfully!");
       router.refresh(); // Refresh to show updated post
@@ -74,9 +71,7 @@ export default function BlogPostPage({ params }: Props) {
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this post?")) {
       try {
-        await axios.delete(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post?._id}`
-        );
+        await axios.delete(`/api/posts/${post?._id}`);
         toast.success("Post deleted successfully!");
         router.push("/");
       } catch (err) {

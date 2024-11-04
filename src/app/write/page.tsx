@@ -118,5 +118,3 @@ const WritePage = () => {
 };
 
 export default WritePage;
-
-// `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`
