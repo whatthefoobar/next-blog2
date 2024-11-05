@@ -1,4 +1,5 @@
-// app/api/users/session/route.ts
+// checks if user is logged in by fetching the jwt token from http cookie and  decodes it to get the userId with which it can fetch user
+// and returns a user object to put in the context
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import connectDB from "@/lib/db";

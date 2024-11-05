@@ -15,7 +15,7 @@ const WritePage = () => {
   const [success, setSuccess] = useState("");
   const router = useRouter();
   const { user } = useUser();
-  const username = user!.username;
+  const username = user?.username || "";
 
   const handleTagChange = (tag: string) => {
     setSelectedTags((prevTags) =>
