@@ -39,16 +39,3 @@ export const protect = async (req: NextRequest) => {
     );
   }
 };
-// Admin middleware
-// export const admin = (
-//   req: AuthenticatedNextApiRequest,
-//   res: NextApiResponse,
-//   next: (req: AuthenticatedNextApiRequest, res: NextApiResponse) => void
-// ) => {
-//   // Check if the user exists and has the 'admin' role
-//   if (req.user && req.user.role === "admin") {
-//     return next(req, res);
-//   } else {
-//     return res.status(401).json({ message: "Not authorized as an admin" });
-//   }
-// };

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/context/UserContext"; // Make sure setUser is available in context
 import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
@@ -19,22 +19,21 @@ const LoginForm = () => {
     setError(null);
 
     try {
-      //change this
       const res = await axios.post("/api/users/login", {
         email,
         password,
       });
 
-      // If login is successful, set the user in the global context
-      setUser(res.data);
+      // Optionally, you can check if the response includes user data.
+      if (res.status === 200) {
+        // Fetch user session after successful login
+        const userRes = await axios.get("/api/users/session");
+        setUser(userRes.data); // Set the user from session route response
 
-      // Optionally store a token in localStorage for further requests
-      localStorage.setItem("token", res.data.token); // Only if you handle tokens
+        // console.log("Login successful!", userRes.data);
 
-      console.log("Login successful!", res.data);
-
-      router.push("/"); // Redirect to home or another page
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        router.push("/"); // Redirect to home or another page
+      }
     } catch (err) {
       const error = err as AxiosError;
       setError(error.message || "Failed to log in. Please try again.");
